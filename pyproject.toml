@@ -8,6 +8,10 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+aws-lambda-powertools = "^2.37.0"
+pydantic = "^2.7.1"
+fastjsonschema = "^2.19.1"
+aws-xray-sdk = "^2.13.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -43,7 +47,7 @@ format = "task format-black && task format-isort"
 format-black = "black ./src ./tests"
 format-isort = "isort ./src ./tests"
 lint = "task lint-black && task lint-ruff && task lint-mypy"
-lint-ruff = "ruff src tests"
+lint-ruff = "ruff check src tests"
 lint-mypy = "mypy src tests"
 lint-black = "black --check src tests"
 
@@ -69,7 +73,6 @@ include_trailing_comma = true
 
 
 [tool.mypy]
-plugins = ["sqlalchemy.ext.mypy.plugin"]
 # The mypy configurations: https://mypy.readthedocs.io/en/stable/config_file.html
 # Prefixes each error with the relevant context.
 show_error_context = true
