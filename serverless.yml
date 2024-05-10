@@ -1,8 +1,29 @@
 service: serverless-python311-template
 frameworkVersion: "3"
 
+# プラグインの登録
+plugins:
+  - serverless-deployment-bucket
+
+custom:
+  # デプロイされるバケットの設定
+  # LINK ref: https://www.serverless.com/plugins/serverless-deployment-bucket
+  deploymentBucket:
+    versioning: true
+    accelerate: true
+    blockPublicAccess: true
+    tags:
+      - Key: Environment
+        Value: ${self.stage}
+
 provider:
   name: aws
   runtime: python3.11
-  stage: dev
+  stage: ${opt:stage}
   region: ap-northeast-1
+
+  # デプロイされるバケットの設定
+  # LINK ref: https://www.serverless.com/plugins/serverless-deployment-bucket
+  deploymentBucket:
+    name: ${self.service}-deployment-bucket-${self.stage}
+    serverSideEncryption: AES256

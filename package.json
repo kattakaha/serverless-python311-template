@@ -1,0 +1,17 @@
+{
+  "name": "serverless-python311-template",
+  "version": "1.0.0",
+  "description": "Serverless Framework Python3.11 Template Repository.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "volta": {
+    "node": "20.9.0",
+    "npm": "10.1.0"
+  },
+  "devDependencies": {
+    "serverless-deployment-bucket": "^1.6.0"
+  }
+}
