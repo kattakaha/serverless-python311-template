@@ -17,9 +17,9 @@ HTTPのステータスコードです。
 詳しくは、[HTTPステータスコード](https://developer.mozilla.org/ja/docs/Web/HTTP/Status)を参照してください。
 これがレスポンスの型に入るのはLambda Powertoolsの仕様です。
     """,
-        example=HTTPStatus.BAD_REQUEST.value,
+        example=HTTPStatus.BAD_REQUEST.value,  # type: ignore
     )
-    message: str = Field(..., title="エラーメッセージ", description="Bad Request Error Message", example="Bad Request")
+    message: str = Field(..., title="エラーメッセージ", description="Bad Request Error Message", example="Bad Request")  # type: ignore
 
 
 class UnauthorizedErrorSchema(BaseModel):
@@ -33,10 +33,10 @@ HTTPのステータスコードです。
 詳しくは、[HTTPステータスコード](https://developer.mozilla.org/ja/docs/Web/HTTP/Status)を参照してください。
 これがレスポンスの型に入るのはLambda Powertoolsの仕様です。
     """,
-        example=HTTPStatus.UNAUTHORIZED.value,
+        example=HTTPStatus.UNAUTHORIZED.value,  # type: ignore
     )
     message: str = Field(
-        ..., title="エラーメッセージ", description="Unauthorized Error Message", example="Unauthorized"
+        ..., title="エラーメッセージ", description="Unauthorized Error Message", example="Unauthorized"  # type: ignore
     )
 
 
@@ -51,9 +51,9 @@ HTTPのステータスコードです。
 詳しくは、[HTTPステータスコード](https://developer.mozilla.org/ja/docs/Web/HTTP/Status)を参照してください。
 これがレスポンスの型に入るのはLambda Powertoolsの仕様です。
 """,
-        example=HTTPStatus.NOT_FOUND.value,
+        example=HTTPStatus.NOT_FOUND.value,  # type: ignore
     )
-    message: str = Field(..., title="エラーメッセージ", description="Not Found Error Message", example="Not Found")
+    message: str = Field(..., title="エラーメッセージ", description="Not Found Error Message", example="Not Found")  # type: ignore
 
 
 class InternalServerErrorSchema(BaseModel):
@@ -67,13 +67,13 @@ HTTPのステータスコードです。
 詳しくは、[HTTPステータスコード](https://developer.mozilla.org/ja/docs/Web/HTTP/Status)を参照してください。
 これがレスポンスの型に入るのはLambda Powertoolsの仕様です。
 """,
-        example=HTTPStatus.INTERNAL_SERVER_ERROR.value,
+        example=HTTPStatus.INTERNAL_SERVER_ERROR.value,  # type: ignore
     )
     message: str = Field(
         ...,
         title="エラーメッセージ",
         description="Internal Server Error Message",
-        example="Internal Server Error",
+        example="Internal Server Error",  # type: ignore
     )
 
 
