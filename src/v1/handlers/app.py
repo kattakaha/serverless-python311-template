@@ -31,11 +31,11 @@ app.use(middlewares=[log_request_response, cors_middleware])
 # Swaggerの設定
 app.enable_swagger(
     path="/swagger",
-    title="画像差分検出アプリAPI仕様書",
+    title="アプリケーションAPI仕様書",
     description="""
 ## 概要
 
-アスカ株式会社向け画像差分検出アプリケーションAPI仕様書。画像差分検出アプリケーションのバックエンドAPIを提供します。
+アプリケーションのAPI仕様書です。
 
 ## 仕様書について
 
@@ -48,9 +48,7 @@ app.enable_swagger(
 リクエストに関しての詳細は、各エンドポイントの仕様を参照してください。
 
 """,
-    contact=Contact(
-        name="Takahashi Katsuyuki", email="takahashi.k@world-wing.com", url=AnyUrl("https://github.com/kkml4220")
-    ),
+    contact=Contact(name="Takahashi Katsuyuki", email="kattakaha@gmail.com", url=AnyUrl("https://github.com/kkml4220")),
     servers=servers,
 )
 
@@ -66,27 +64,21 @@ class HealthCheckSchema(BaseModel):
     description="""
 ## 概要
 
-サーバーの稼働状況とAPIのバージョン情報を取得します
+サーバーの稼働状況を確認するためのエンドポイントです。
 
 ## 詳細
 
 基本的には常に Status Code 200: で`ok` が返却されます。
 それ以外の場合は、サーバーに問題が発生している可能性がありますのでお手数ですが、髙橋までご連絡ください。
 
-APIのバージョンに関しては、ローカルからデプロイされた場合`latest` になります。
-GitHub Actions によるCI/CD でデプロイされた場合は、コミットハッシュが付与されたバージョンになります。
-
 ## 変更履歴
-- 2024/05/04: ヘルスチェックエンドポイントを追加
+- 2024/05/10: ヘルスチェックエンドポイントを追加
     """,
     tags=["default"],
     operation_id="healthcheck",
     response_description="Health Check Status",
     responses={
-        200: {
-            "description": "Health Check Status",
-            "content": {"application/json": {"schema": HealthCheckSchema.model_json_schema()}},
-        },
+        200: {"description": "Health Check Status"},
         400: errors.BAD_REQUEST_ERROR,
         401: errors.UNAUTHORIZED_ERROR,
         500: errors.INTERNAL_SERVER_ERROR,

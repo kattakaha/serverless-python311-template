@@ -111,3 +111,13 @@ package:
     - ./**
   include:
     - ./src/**
+
+functions:
+  ApplicationApiHandler:
+    description: Application API Handler
+    handler: src/v1/handlers/app.lambda_handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
