@@ -1,0 +1,8 @@
+service: serverless-python311-template
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.11
+  stage: dev
+  region: ap-northeast-1
