@@ -1,20 +1,29 @@
 service: serverless-python311-template
 frameworkVersion: "3"
 
-# プラグインの登録
 plugins:
-  - serverless-deployment-bucket
+  - serverless-offline
   - serverless-python-requirements
+  - serverless-prune-plugin
+  - serverless-ignore
+  - serverless-deployment-bucket
+  - serverless-plugin-tracing
 
 custom:
-  # Serverless offlineの設定
+  # Serverless offline plugin
   # LINK ref: https://www.serverless.com/plugins/serverless-offline
   serverless-offline:
     httpPort: 3333
     noPrependStageInUrl: true
 
-  # デプロイされるバケットの設定
-  # LINK ref: https://www.serverless.com/plugins/serverless-deployment-bucket
+  # Serverless Prune Plugin
+  # LINK: ref: https://www.serverless.com/plugins/serverless-prune-plugin
+  prune:
+    automatic: true
+    number: 3
+
+  # Serverless Deployment Bucket Plugin
+  # LINK: ref: https://www.serverless.com/plugins/serverless-deployment-bucket
   deploymentBucket:
     versioning: true
     accelerate: true
@@ -23,7 +32,11 @@ custom:
       - Key: Environment
         Value: ${self.stage}
 
-  # Pythonのパッケージ管理の設定
+  # Versioning Deployed Functions
+  # LINK: https://www.serverless.com/framework/docs/providers/aws/guide/functions#versioning-deployed-functions
+  versionFunctions: false
+
+  # Serverless Python Requirements Plugin
   # LINK ref: https://www.serverless.com/plugins/serverless-python-requirements
   pythonRequirements:
     dockerizePip: true
@@ -51,7 +64,7 @@ provider:
   stage: ${opt:stage, "dev"}
   region: ap-northeast-1
 
-  # デプロイされるバケットの設定
+  # Serverless Deployment Bucket Plugin
   # LINK ref: https://www.serverless.com/plugins/serverless-deployment-bucket
   deploymentBucket:
     name: ${self.service}-deployment-bucket-${self.stage}
