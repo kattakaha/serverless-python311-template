@@ -54,7 +54,7 @@ app.enable_swagger(
 
 
 class HealthCheckSchema(BaseModel):
-    status: str = Field(..., title="ステータス", description="Health Check Status", example="ok")
+    status: str = Field(..., title="ステータス", description="Health Check Status", example="ok")  # type: ignore
 
 
 @app.get(
