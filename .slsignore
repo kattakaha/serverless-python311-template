@@ -1,0 +1,28 @@
+# docs
+docs/
+README.md
+
+# tests
+tests/
+__tests__/*
+.venv/
+
+# config
+.vscode/
+poetry.lock
+pyproject.toml
+dokcer-compose.yml
+poetry.lock
+package.json
+package-lock.json
+
+# git
+.git/
+.gitignore
+
+# serverless
+.serverless/
+node_modules/
+
+# terraform
+terraform/
