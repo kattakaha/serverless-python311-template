@@ -7,6 +7,12 @@ plugins:
   - serverless-python-requirements
 
 custom:
+  # Serverless offlineの設定
+  # LINK ref: https://www.serverless.com/plugins/serverless-offline
+  serverless-offline:
+    httpPort: 3333
+    noPrependStageInUrl: true
+
   # デプロイされるバケットの設定
   # LINK ref: https://www.serverless.com/plugins/serverless-deployment-bucket
   deploymentBucket:
