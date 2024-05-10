@@ -92,6 +92,16 @@ provider:
 
   environment:
     STAGE: ${opt:stage, self:custom.default.stage}
+    # API setting
+    APP_API_BASE_URL: ${file(./env/${opt:stage, self:custom.default.stage}.yml):APP_API_BASE_URL}
+    APP_API_CORS_ALLOWED_ORIGINS: ${file(./env/${opt:stage, self:custom.default.stage}.yml):APP_API_CORS_ALLOWED_ORIGINS}
+    # lambda powertools settings
+    POWERTOOLS_LOG_LEVEL: ${file(./env/${opt:stage, self:custom.default.stage}.yml):POWERTOOLS_LOG_LEVEL}
+    POWERTOOLS_SERVICE_NAME: ${file(./env/${opt:stage, self:custom.default.stage}.yml):POWERTOOLS_SERVICE_NAME}
+    POWERTOOLS_DEV: ${file(./env/${opt:stage, self:custom.default.stage}.yml):POWERTOOLS_DEV}
+    POWERTOOLS_DEBUG: ${file(./env/${opt:stage, self:custom.default.stage}.yml):POWERTOOLS_DEBUG}
+    POWERTOOLS_TRACE_MIDDLEWARES: ${file(./env/${opt:stage, self:custom.default.stage}.yml):POWERTOOLS_TRACE_MIDDLEWARES}
+    POWERTOOLS_TRACE_DISABLED: ${file(./env/${opt:stage, self:custom.default.stage}.yml):POWERTOOLS_TRACE_DISABLED}
 
 package:
   individually: true
