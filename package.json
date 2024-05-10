@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "serverless offline start --reloadHandler --stage local"
   },
-  "author": "",
+  "author": "Takahashi Katsuyuki (kattakaha@gmail.com) <https://github.com/kkml4220>",
   "license": "ISC",
   "volta": {
     "node": "20.9.0",
