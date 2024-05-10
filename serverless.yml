@@ -4,6 +4,7 @@ frameworkVersion: "3"
 # プラグインの登録
 plugins:
   - serverless-deployment-bucket
+  - serverless-python-requirements
 
 custom:
   # デプロイされるバケットの設定
@@ -16,10 +17,32 @@ custom:
       - Key: Environment
         Value: ${self.stage}
 
+  # Pythonのパッケージ管理の設定
+  # LINK ref: https://www.serverless.com/plugins/serverless-python-requirements
+  pythonRequirements:
+    dockerizePip: true
+    dockerSsh: true
+    usePoetry: true
+    slim: true
+    noDeploy:
+      - pytest
+      - boto3
+      - black
+      - mypy
+      - isort
+      - pytest-mock
+      - pytest-cov
+      - taskipy
+      - ruff
+      - alembic
+      - tox
+      - pdf2image
+      - ipykernel
+
 provider:
   name: aws
   runtime: python3.11
-  stage: ${opt:stage}
+  stage: ${opt:stage, "dev"}
   region: ap-northeast-1
 
   # デプロイされるバケットの設定
