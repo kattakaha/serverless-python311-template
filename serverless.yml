@@ -10,6 +10,8 @@ plugins:
   - serverless-plugin-tracing
 
 custom:
+  default:
+    stage: dev
   # Serverless offline plugin
   # LINK ref: https://www.serverless.com/plugins/serverless-offline
   serverless-offline:
@@ -60,12 +62,42 @@ custom:
 
 provider:
   name: aws
-  runtime: python3.11
-  stage: ${opt:stage, "dev"}
+  # Default stage (default: dev)
+  stage: ${opt:stage, self:custom.default.stage}
+  # Default region (default: us-east-1)
   region: ap-northeast-1
+
+  # x-ray tracing
+  tracing:
+    lambda: true
+    apiGateway: true
+
+  # NOTE: Lambda Runtime Configuration
+  # Lambda configuration
+  runtime: python3.11
+  runtimeManagement: auto
+  # Processor architecture: 'x86_64' or 'arm64' via Graviton2 (default: x86_64)
+  architecture: x86_64
+  # Default memory size for functions (default: 1024MB)
+  memorySize: 4096
+  # Default timeout for functions (default: 6 seconds)
+  # Note: API Gateway has a maximum timeout of 30 seconds
+  timeout: 30
 
   # Serverless Deployment Bucket Plugin
   # LINK ref: https://www.serverless.com/plugins/serverless-deployment-bucket
   deploymentBucket:
     name: ${self.service}-deployment-bucket-${self.stage}
     serverSideEncryption: AES256
+
+  environment:
+    STAGE: ${opt:stage, self:custom.default.stage}
+
+package:
+  individually: true
+  # package.json devDependencies are not included in the deployment package
+  excludeDevDependencies: true
+  exclude:
+    - ./**
+  include:
+    - ./src/**
