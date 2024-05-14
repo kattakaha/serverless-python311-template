@@ -53,6 +53,8 @@ poetry run task test
 npm run dev
 ```
 
+Swagger URL: <http://localhost:3333/swagger>
+
 ### Run local server
 
 health check 用エンドポイント: <http://localhost:3333/healthcheck>
