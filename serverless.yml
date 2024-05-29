@@ -87,7 +87,7 @@ provider:
   # Serverless Deployment Bucket Plugin
   # LINK ref: https://www.serverless.com/plugins/serverless-deployment-bucket
   deploymentBucket:
-    name: ${self.service}-deployment-bucket-${self.stage}
+    name: ${self.service}-deployment-bucket-${opt:stage}
     serverSideEncryption: AES256
 
   environment:
