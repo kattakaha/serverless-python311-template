@@ -13,6 +13,12 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
       - name: Set up Python
         # This is the version of the action for setting up Python, not the Python version.
         uses: actions/setup-python@v4
@@ -21,6 +27,16 @@ jobs:
           python-version: "3.11.6"
           # Optional - x64 or x86 architecture, defaults to x64
           architecture: "x64"
+
+      - name: Set sha_short
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Create dot env file
+        shell: bash
+        run: |
+          touch .env
+          version=$(node -p -e "require('./package.json').version" | sed 's/\.[^.]*$//')
+          echo "API_VERSION_HASH=$version.${{ steps.vars.outputs.sha_short }}" >> .env
       # You can test your matrix by printing the current Python version
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
