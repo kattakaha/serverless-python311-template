@@ -9,7 +9,7 @@ from aws_lambda_powertools.event_handler.middlewares import NextMiddleware
 from aws_lambda_powertools.middleware_factory import lambda_handler_decorator
 
 # First Party Library
-from v1.config.settings import APP_API_CORS_ALLOWED_ORIGIN_LIST
+from v1.config.settings import API_CORS_ALLOWED_ORIGIN_LIST
 
 logger = Logger()
 
@@ -55,7 +55,7 @@ def cors_middleware(app: APIGatewayRestResolver, next_middleware: NextMiddleware
         logger.info("Response", extra={"response": response})
         return response
     logger.info("Origin", extra={"origin": origin})
-    if origin not in APP_API_CORS_ALLOWED_ORIGIN_LIST:
+    if origin not in API_CORS_ALLOWED_ORIGIN_LIST:
         raise UnauthorizedError("Invalid origin")
     result = next_middleware(app)
     if app.current_event.path == "/healthcheck":

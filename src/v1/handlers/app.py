@@ -8,6 +8,7 @@ from aws_lambda_powertools.utilities.typing import LambdaContext
 from pydantic import BaseModel, Field
 
 # First Party Library
+from v1.config.settings import API_VERSION_HASH
 from v1.middlewares.common import cors_middleware, handler_middleware, log_request_response
 from v1.schemas import errors
 from v1.schemas.api_server_info import API_COMMON_PREFIX, CONTACT, SERVERS
@@ -25,7 +26,7 @@ app.use(middlewares=[log_request_response, cors_middleware])
 app.enable_swagger(
     path="/swagger",
     title="アプリケーションAPI仕様書",
-    description="""
+    description=f"""
 ## 概要
 
 アプリケーションのAPI仕様書です。
@@ -40,6 +41,10 @@ app.enable_swagger(
 リクエストとレスポンスのフォーマットは、JSON 形式で提供されます。
 リクエストに関しての詳細は、各エンドポイントの仕様を参照してください。
 
+## APIのバージョン情報
+
+APIのバージョンは、`{API_VERSION_HASH}` です。このバージョンは、ローカルからデプロイされた場合`latest` になります。
+GitHub Actions によるCI/CD でデプロイされた場合は、コミットハッシュが付与されたバージョンになります。このバージョン情報は、ヘルスチェックエンドポイントで確認することもできます。
 """,
     contact=CONTACT,
     servers=SERVERS,
@@ -48,6 +53,7 @@ app.enable_swagger(
 
 class HealthCheckSchema(BaseModel):
     status: str = Field(..., title="ステータス", description="Health Check Status", example="ok")  # type: ignore
+    version: str = Field(..., title="APIバージョン情報", description="API Version", example="1.0.0")  # type: ignore
 
 
 @app.get(
@@ -64,6 +70,10 @@ class HealthCheckSchema(BaseModel):
 基本的には常に Status Code 200: で`ok` が返却されます。
 それ以外の場合は、サーバーに問題が発生している可能性がありますのでお手数ですが、髙橋までご連絡ください。
 
+## APIのバージョン情報
+
+APIのバージョンは、環境変数で`API_VERSION_HASH` として注入されます。ローカルからデプロイされた場合`latest` になります。
+
 ## 変更履歴
 
 - 2024/05/10: ヘルスチェックエンドポイントを追加
@@ -79,7 +89,7 @@ class HealthCheckSchema(BaseModel):
     },
 )
 def health_check() -> HealthCheckSchema:
-    return HealthCheckSchema(**{"status": "ok"})
+    return HealthCheckSchema(status="ok", version=API_VERSION_HASH)
 
 
 @handler_middleware
