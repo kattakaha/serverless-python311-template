@@ -16,7 +16,7 @@ custom:
   # LINK ref: https://www.serverless.com/plugins/serverless-offline
   serverless-offline:
     httpPort: 3333
-    noPrependStageInUrl: true
+    noPrependStageInUrl: false
 
   # Serverless Prune Plugin
   # LINK: ref: https://www.serverless.com/plugins/serverless-prune-plugin
@@ -93,7 +93,7 @@ provider:
   environment:
     STAGE: ${opt:stage, self:custom.default.stage}
     # API setting
-    APP_API_BASE_URL: ${file(./env/${opt:stage, self:custom.default.stage}.yml):APP_API_BASE_URL}
+    API_BASE_URL: ${file(./env/${opt:stage, self:custom.default.stage}.yml):API_BASE_URL}
     APP_API_CORS_ALLOWED_ORIGINS: ${file(./env/${opt:stage, self:custom.default.stage}.yml):APP_API_CORS_ALLOWED_ORIGINS}
     # lambda powertools settings
     POWERTOOLS_LOG_LEVEL: ${file(./env/${opt:stage, self:custom.default.stage}.yml):POWERTOOLS_LOG_LEVEL}
@@ -113,11 +113,19 @@ package:
     - ./src/**
 
 functions:
-  ApplicationApiHandler:
-    description: Application API Handler
+  ApplicationApiHandlerV1:
+    description: Application API Handler V1
     handler: src/v1/handlers/app.lambda_handler
     events:
       - http:
-          path: /{proxy+}
+          path: /v1/{proxy+}
           method: ANY
+          cors: true
+  ApplicationApiSwaggerHostingHandlerV1:
+    description: Application API Swagger Document Hosting Handler V1
+    handler: src/v1/handlers/app.lambda_handler
+    events:
+      - http:
+          path: /v1/swagger
+          method: get
           cors: true
