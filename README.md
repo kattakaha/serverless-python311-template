@@ -53,11 +53,11 @@ poetry run task test
 npm run dev
 ```
 
-Swagger URL: <http://localhost:3333/swagger>
+Swagger URL: <http://localhost:3333/local/v1/swagger>
 
 ### Run local server
 
-health check 用エンドポイント: <http://localhost:3333/healthcheck>
+health check 用エンドポイント: <http://localhost:3333/local/v1/healthcheck>
 
 ```bash
 # activate python venv shell
