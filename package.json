@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "serverless-deployment-bucket": "^1.6.0",
+    "serverless-dotenv-plugin": "^6.0.0",
     "serverless-ignore": "^0.2.1",
     "serverless-offline": "^13.5.0",
     "serverless-plugin-tracing": "^2.0.0",

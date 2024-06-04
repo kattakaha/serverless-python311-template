@@ -1,3 +1,5 @@
+useDotenv: true
+
 service: serverless-python311-template
 frameworkVersion: "3"
 
@@ -8,6 +10,7 @@ plugins:
   - serverless-ignore
   - serverless-deployment-bucket
   - serverless-plugin-tracing
+  - serverless-dotenv-plugin
 
 custom:
   default:
@@ -93,8 +96,9 @@ provider:
   environment:
     STAGE: ${opt:stage, self:custom.default.stage}
     # API setting
+    API_VERSION_HASH: ${env:API_VERSION_HASH, "latest"}
     API_BASE_URL: ${file(./env/${opt:stage, self:custom.default.stage}.yml):API_BASE_URL}
-    APP_API_CORS_ALLOWED_ORIGINS: ${file(./env/${opt:stage, self:custom.default.stage}.yml):APP_API_CORS_ALLOWED_ORIGINS}
+    API_CORS_ALLOWED_ORIGINS: ${file(./env/${opt:stage, self:custom.default.stage}.yml):API_CORS_ALLOWED_ORIGINS}
     # lambda powertools settings
     POWERTOOLS_LOG_LEVEL: ${file(./env/${opt:stage, self:custom.default.stage}.yml):POWERTOOLS_LOG_LEVEL}
     POWERTOOLS_SERVICE_NAME: ${file(./env/${opt:stage, self:custom.default.stage}.yml):POWERTOOLS_SERVICE_NAME}
