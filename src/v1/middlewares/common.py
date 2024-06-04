@@ -7,7 +7,9 @@ from aws_lambda_powertools.event_handler import APIGatewayRestResolver, Response
 from aws_lambda_powertools.event_handler.exceptions import UnauthorizedError
 from aws_lambda_powertools.event_handler.middlewares import NextMiddleware
 from aws_lambda_powertools.middleware_factory import lambda_handler_decorator
-from config.settings import APP_API_CORS_ALLOWED_ORIGIN_LIST
+
+# First Party Library
+from v1.config.settings import APP_API_CORS_ALLOWED_ORIGIN_LIST
 
 logger = Logger()
 

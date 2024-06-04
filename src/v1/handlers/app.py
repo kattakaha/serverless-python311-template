@@ -1,29 +1,22 @@
 # Standard Library
-from typing import Any, List
+from typing import Any
 
 # Third Party Library
 from aws_lambda_powertools import Logger, Tracer
 from aws_lambda_powertools.event_handler import APIGatewayRestResolver
-from aws_lambda_powertools.event_handler.openapi.models import Contact, Server
 from aws_lambda_powertools.utilities.typing import LambdaContext
-from config.settings import APP_API_BASE_URL, STAGE
-from middlewares.common import cors_middleware, handler_middleware, log_request_response
 from pydantic import BaseModel, Field
-from pydantic.networks import AnyUrl
-from schemas import errors
+
+# First Party Library
+from v1.middlewares.common import cors_middleware, handler_middleware, log_request_response
+from v1.schemas import errors
+from v1.schemas.api_server_info import API_COMMON_PREFIX, CONTACT, SERVERS
 
 tracer = Tracer(service="ApplicationHandler")
 logger = Logger(service="ApplicationHandler")
 
-servers: List[Server] = []
 
-# APIのサーバー情報
-if STAGE == "local":
-    servers.append(Server(url="http://localhost:3333", description="Local Development Server", variables=None))
-elif STAGE == "dev":
-    servers.append(Server(url=APP_API_BASE_URL, description="Development Server", variables=None))
-
-app = APIGatewayRestResolver(enable_validation=True)
+app = APIGatewayRestResolver(enable_validation=True, strip_prefixes=[f"/{API_COMMON_PREFIX}"])
 
 # ミドルウェアの登録
 app.use(middlewares=[log_request_response, cors_middleware])
@@ -48,8 +41,8 @@ app.enable_swagger(
 リクエストに関しての詳細は、各エンドポイントの仕様を参照してください。
 
 """,
-    contact=Contact(name="Takahashi Katsuyuki", email="kattakaha@gmail.com", url=AnyUrl("https://github.com/kkml4220")),
-    servers=servers,
+    contact=CONTACT,
+    servers=SERVERS,
 )
 
 
@@ -72,8 +65,9 @@ class HealthCheckSchema(BaseModel):
 それ以外の場合は、サーバーに問題が発生している可能性がありますのでお手数ですが、髙橋までご連絡ください。
 
 ## 変更履歴
+
 - 2024/05/10: ヘルスチェックエンドポイントを追加
-    """,
+""",
     tags=["default"],
     operation_id="healthcheck",
     response_description="Health Check Status",
