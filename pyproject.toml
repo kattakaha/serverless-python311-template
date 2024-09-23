@@ -4,11 +4,11 @@ version = "0.1.0"
 description = "Serverless Framework Python3.11 Template Repository."
 authors = ["Takahashi Katsuyuki <kattakaha@gmail.com>"]
 readme = "README.md"
-
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
-aws-lambda-powertools = "^2.37.0"
+aws-lambda-powertools = "^3.0.0"
 pydantic = "^2.7.1"
 fastjsonschema = "^2.19.1"
 aws-xray-sdk = "^2.13.0"
