@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-aws-lambda-powertools = "^2.37.0"
+aws-lambda-powertools = "^3.0.0"
 pydantic = "^2.7.1"
 fastjsonschema = "^2.19.1"
 aws-xray-sdk = "^2.13.0"
