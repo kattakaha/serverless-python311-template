@@ -1,0 +1,44 @@
+name: Python Dependencies Vulnerability Check
+
+# pyproject.tomlが変更されたときに実行
+on:
+  push:
+    paths:
+      - "pyproject.toml"
+  pull_request:
+    paths:
+      - "pyproject.toml"
+
+jobs:
+  dependency-check:
+    runs-on: [ubuntu-latest]
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        # This is the version of the action for setting up Python, not the Python version.
+        uses: actions/setup-python@v5
+        with:
+          # Semantic version range syntax or exact version of a Python version
+          python-version: "3.11.6"
+          # Optional - x64 or x86 architecture, defaults to x64
+          architecture: "x64"
+      # You can test your matrix by printing the current Python version
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
+      - name: Install poetry
+        run: pip install poetry
+      - name: Install dependencies
+        run: poetry install --no-root
+
+      - name: Install Safety
+        run: pip install safety
+
+      - name: Export requirements.txt
+        run: poetry export -f requirements.txt --output requirements.txt
+
+      - name: Run safety check
+        run: safety check -r requirements.txt
