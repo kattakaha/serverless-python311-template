@@ -2,9 +2,7 @@ name: Python Dependencies Vulnerability Check
 
 # pyproject.tomlが変更されたときに実行
 on:
-  push:
-    paths:
-      - "pyproject.toml"
+  workflow_dispatch:
   pull_request:
     paths:
       - "pyproject.toml"
