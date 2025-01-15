@@ -36,7 +36,7 @@ jobs:
         run: pip install safety
 
       - name: Export requirements.txt
-        run: poetry export -f requirements.txt --output requirements.txt
+        run: poetry run poetry export -f requirements.txt --output requirements.txt
 
       - name: Run safety check
         run: safety check -r requirements.txt
