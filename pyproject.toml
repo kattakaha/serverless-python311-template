@@ -16,7 +16,7 @@ aws-xray-sdk = "^2.13.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^25.1.0"
-ruff = "^0.11.0"
+ruff = "^0.12.0"
 pytest = "^8.2.0"
 pytest-mock = "^3.14.0"
 pytest-cov = "^6.0.0"
