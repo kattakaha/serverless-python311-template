@@ -11,7 +11,7 @@ python = "^3.11"
 aws-lambda-powertools = "^3.0.0"
 pydantic = "^2.7.1"
 fastjsonschema = "^2.19.1"
-aws-xray-sdk = "^2.13.0"
+aws-xray-sdk = "^2.15.0"
 
 
 [tool.poetry.group.dev.dependencies]
